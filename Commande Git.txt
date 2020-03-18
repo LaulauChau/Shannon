@@ -7,7 +7,7 @@ git config --global user.email "{Email}" // défini l'identité de l'utilisateur
 
 git init // initialiser Git, à utiliser dans le répertoire où se trouver le projet
 
-git add {FileName.extension} // sélectionne un fichier
+git add {FileName.extension} // sélectionne un fichier (. = tous les fichiers)
 git commit -m "{Texte}" // enregistre le fichier, {Texte} information sur l'enregistrement (ex : Notifier une modification)
 
 git log // liste tous les commits (du plus récent au plus ancien)
