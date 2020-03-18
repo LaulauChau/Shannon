@@ -1,0 +1,9 @@
+représentation des points et des liaisons
+
+struct point : (nom du point;char)
+
+struct li : (struct point, struct point), char etat
+
+struct liaisons : li[], taille;char
+
+IA : easy : random
