@@ -1,12 +1,28 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
+
+typedef struct point point_t;
+
+struct element_visites
+{
+	point_t *p;
+	bool visite;
+};
+typedef struct element_visites e_visites_t;
+
+struct visites
+{
+	e_visites_t tab[50];
+	int taille;
+};
+typedef struct visites visites_t;
 
 // point
 struct point
 {
 	char nom;
 };
-typedef struct point point_t;
 
 // Liste de points
 struct points

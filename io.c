@@ -1,7 +1,7 @@
 #define HG1 7
 #define LG1 10
 
-#include "Core.h"
+#include "core.h"
 
 char graph[HG1][LG1] = {
     {'.', '.', '.', 'A', '.', '.', 'C', '.', '.', 'D'},
@@ -15,11 +15,15 @@ char graph[HG1][LG1] = {
 void afficherFile(file_p_t *file)
 {
     element_p_t *courant;
-    courant = file->premier;
-    while (courant != NULL)
+    courant = (element_p_t *)malloc(sizeof(element_p_t));
+    if (file->premier != NULL)
     {
-        printf("Point : %c\n", courant->p->nom);
-        courant = courant->suivant;
+        courant = file->premier;
+        while (courant != NULL)
+        {
+            printf("Point : %c\n", courant->p->nom);
+            courant = courant->suivant;
+        }
     }
 }
 

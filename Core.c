@@ -1,4 +1,76 @@
-#include "Core.h"
+#include "core.h"
+
+// parcours en profondeur
+bool dfs(liaisons_t ls, point_t p1, point_t p2)
+{
+	if (p1.nom == p2.nom)
+		return true;
+	points_t *vs;
+	vs = (points_t *)malloc(sizeof(points_t));
+	vs->t = 0;
+	vs->pts[vs->t] = p1;
+	vs->t++;
+	return dfs_aux(ls, p1, p2, vs);
+}
+
+bool dfs_aux(liaisons_t ls, point_t p1, point_t p2, points_t *vs)
+{
+	liaisons_t voisins_p1;
+	vs->pts[vs->t] = p1;
+	vs->t++;
+	voisins_p1.t = 0;
+	voisins_p1 = l_voisins(ls, p1);
+	for (int i = 0; i < voisins_p1.t; i++)
+	{
+		if (!(isIncluded(*vs, voisins_p1.l[i].p1) && (isIncluded(*vs, voisins_p1.l[i].p2))))
+		{
+			if (voisins_p1.l[i].p1.nom == p2.nom)
+			{
+				return true;
+			}
+			if (voisins_p1.l[i].p2.nom == p2.nom)
+			{
+				return true;
+			}
+			point_t p = (voisins_p1.l[i].p1.nom == p1.nom) ? voisins_p1.l[i].p2 : voisins_p1.l[i].p1;
+			return dfs_aux(ls, p, p2, vs);
+		}
+	}
+	return false;
+}
+
+bool isIncluded(points_t vs, point_t p)
+{
+	for (int i = 0; i < vs.t; i++)
+	{
+		if (vs.pts[i].nom == p.nom)
+			return true;
+	}
+	return false;
+}
+
+liaisons_t l_voisins(liaisons_t l, point_t p)
+{
+
+	liaisons_t voisins;
+	voisins.t = 0;
+
+	for (int i = 0; i < l.t; i++)
+	{
+		if (l.l[i].p1.nom == p.nom)
+		{
+			voisins.l[voisins.t] = l.l[i];
+			voisins.t++;
+		}
+		if (l.l[i].p2.nom == p.nom)
+		{
+			voisins.l[voisins.t] = l.l[i];
+			voisins.t++;
+		}
+	}
+
+	return voisins;
+}
 
 // renvoie NULL quand la file est vide et devrait être géré pendant le defilage
 point_t *defiler(file_p_t *file)
@@ -48,10 +120,11 @@ void enfiler(file_p_t *file, point_t *p)
 	}
 }
 
-void initFile_pts(file_p_t *file)
+void initFile_pts(file_p_t **file)
 {
-	file->premier = NULL;
-	file->dernier = NULL;
+	*file = (file_p_t *)malloc(sizeof(file_p_t));
+	(*file)->premier = NULL;
+	(*file)->dernier = NULL;
 }
 
 points_t voisins(liaisons_t l, point_t p)
@@ -127,8 +200,8 @@ int main(void)
 	ls.t = 0;
 
 	ls = add(ls, a, c);
-	ls = add(ls, c, d);
-	ls = add(ls, d, b);
+	//ls = add(ls, c, d);
+	//ls = add(ls, d, b);
 	ls = add(ls, c, e);
 	ls = add(ls, e, b);
 	ls = add(ls, e, f);
@@ -160,25 +233,60 @@ int main(void)
 	p = voisins(ls, h);
 	affPts(p);
 
+	liaisons_t voisins;
+	voisins.t = 0;
+	voisins = l_voisins(ls, a);
+	affLs(voisins);
+	voisins = l_voisins(ls, b);
+	affLs(voisins);
+	voisins = l_voisins(ls, c);
+	affLs(voisins);
+	voisins = l_voisins(ls, d);
+	affLs(voisins);
+	voisins = l_voisins(ls, e);
+	affLs(voisins);
+	voisins = l_voisins(ls, f);
+	affLs(voisins);
+	voisins = l_voisins(ls, g);
+	affLs(voisins);
+	voisins = l_voisins(ls, h);
+	affLs(voisins);
+
 	affLs(ls);
 
-	affPlateau();
-
-	point_t *ptt;
-	ptt = (point_t *)malloc(sizeof(point_t));
-	printf("%c\n", ptt->nom);
-
-	file_p_t *file;
-	initFile_pts(file);
-	afficherFile(file);
-	enfiler(file, &a);
-	enfiler(file, &b);
-	enfiler(file, &c);
-	enfiler(file, &d);
-	afficherFile(file);
-	ptt = defiler(file);
-	if (ptt != NULL)
-		printf("%c\n", ptt->nom);
+	if (dfs(ls, e, e))
+		printf("Vrai\n");
 	else
-		printf("PTT is NULL.");
+		printf("Faux\n");
+	if (dfs(ls, d, d))
+		printf("Vrai\n");
+	else
+		printf("Faux\n");
+	if (dfs(ls, d, b))
+		printf("Vrai\n");
+	else
+		printf("Faux\n");
+	if (dfs(ls, d, c))
+		printf("Vrai\n");
+	else
+		printf("Faux\n");
+	if (dfs(ls, d, e))
+		printf("Vrai\n");
+	else
+		printf("Faux\n");
+	if (dfs(ls, d, f))
+		printf("Vrai\n");
+	else
+		printf("Faux\n");
+
+	if (dfs(ls, d, h))
+		printf("Vrai\n");
+	else
+		printf("Faux\n");
+	if (dfs(ls, d, g))
+		printf("Vrai\n");
+	else
+		printf("Faux\n");
+
+	affPlateau();
 }

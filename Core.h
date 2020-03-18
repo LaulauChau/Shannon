@@ -2,6 +2,15 @@
 
 // ------ core ----- //
 
+// parcours en profondeur
+bool dfs(liaisons_t, point_t, point_t);
+
+bool dfs_aux(liaisons_t, point_t, point_t, points_t *);
+
+bool isIncluded(points_t, point_t);
+
+liaisons_t l_voisins(liaisons_t, point_t);
+
 // defile le premier point de la file et
 point_t *defiler(file_p_t *);
 
@@ -9,7 +18,7 @@ point_t *defiler(file_p_t *);
 void enfiler(file_p_t *, point_t *);
 
 // initialise les pointeurs de la file premier et dernier à NULL
-void initFile_pts(file_p_t *);
+void initFile_pts(file_p_t **);
 
 // Ajoute une liaison (libre) à partir des points passés en paramètre à la liste de liaison passée en paramètre. (Sauf si doublon)
 liaisons_t add(liaisons_t, point_t, point_t);

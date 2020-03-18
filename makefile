@@ -1,9 +1,9 @@
 
-OBJ=Core.o io.o
+OBJ=core.o io.o
 CC=gcc
 
-Core:	$(OBJ) Core.h types.h
-	$(CC) $(OBJ) -o Core
+core:	$(OBJ) core.h types.h
+	$(CC) $(OBJ) -o core
 
 %.o :	%.c
 	$(CC)  -c $<
