@@ -3,26 +3,30 @@
 #include <stdbool.h>
 
 typedef struct point point_t;
+typedef struct element_pere e_pere_t;
+typedef struct table_pere tab_pere_t;
 
-struct element_visites
-{
-	point_t *p;
-	bool visite;
-};
-typedef struct element_visites e_visites_t;
-
-struct visites
-{
-	e_visites_t tab[50];
-	int taille;
-};
-typedef struct visites visites_t;
 
 // point
 struct point
 {
 	char nom;
 };
+
+struct element_pere
+{
+	point_t fils;
+	point_t pere;
+};
+
+
+struct table_pere
+{
+	e_pere_t tab[50];
+	int t;
+};
+
+
 
 // Liste de points
 struct points

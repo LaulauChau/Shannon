@@ -3,7 +3,7 @@ OBJ=core.o io.o
 CC=gcc
 
 core:	$(OBJ) core.h types.h
-	$(CC) $(OBJ) -o core
+	$(CC) $(OBJ) -o Shannon
 
 %.o :	%.c
 	$(CC)  -c $<
