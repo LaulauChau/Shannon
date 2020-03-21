@@ -37,7 +37,7 @@ void affLs(liaisons_t l)
 
     if (!l.t)
     {
-        printf("Il n'y a pas de liaison.");
+        printf("Il n'y a pas de liaison.\n");
         return;
     }
     else
